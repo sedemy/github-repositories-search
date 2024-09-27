@@ -2,27 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Services\GenerateLinkService;
+use Illuminate\Http\Request;
 
 class SearchFormController extends Controller
 {
-
-
-    public function form(){
+    public function form()
+    {
         return view('search_form');
     }
 
+    public function showResult(Request $request)
+    {
+        $repositories = (new GenerateLinkService())->getRepositories($request);
 
-
-    public function show_result(){
-
-        $repositories =  (new GenerateLinkService(request('language'),request('created'),request('sort'),request('order'),request('per_page')))->get_repositories();
-
-
-        return view('repositories',compact('repositories'));
-
-
+        return view('repositories', compact('repositories'));
     }
 }
